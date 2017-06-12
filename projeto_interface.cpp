@@ -1,8 +1,20 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <windows.h>
+#include <winsock2.h>
+#include <stdio.h>
+#include <mysql/mysql.h>
 
 using namespace std;
+
+#define HOST "localhost"
+#define USER "root"
+#define PASS "admin"
+#define DB "transporte"
+
+
+MYSQL *conn;
 
 struct Entidade {
   string nome;
@@ -10,6 +22,15 @@ struct Entidade {
 };
 
 int main ( int argc, char *argv[] ) {
+
+conn = mysql_init(NULL);
+
+	if(mysql_real_connect(conn, HOST, USER, PASS, DB, 0, NULL, 0))
+	{
+		cout << "conectado \n";
+
+	}
+
   vector<Entidade> entidades;
   vector<string> atributosInseridos;
   string tmpString;
