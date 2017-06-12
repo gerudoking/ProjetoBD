@@ -22,10 +22,15 @@ int main ( int argc, char *argv[] )
 
 	if( mysql_real_connect( &conn, "localhost", "root", "root", "transporte", 3306, NULL, 0 ) )
 	{
-    cout << "conectado \n";
+    cout << "Conectado com o Banco de Dados" << endl;
+
+    MYSQL_RES *result;
+    MYSQL_ROW row;
+    MYSQL_FIELD *field;
 
     vector<Entidade> entidades;
     vector<string> atributosInseridos;
+    vector<unsigned int> tabs;
     string tmpString, sqlCommand;
     int opcao = -1;
     unsigned int nroEntidade, nroElemento;
@@ -203,8 +208,6 @@ int main ( int argc, char *argv[] )
           cout << sqlCommand << endl;
           mysql_query( &conn, sqlCommand.c_str() );
 
-          //mysql_query( &conn,"INSERT INTO `transporte`.`condutor` (`Nome`, `CPF`, `RG`, `Órgão Expedidor`,`Data de nascimento`) VALUES ('Geovana', '03674875102', '26354','SSP', '19910526');" );
-
           sqlCommand.clear();
           for ( unsigned int i = 0; i < entidades[nroEntidade - 1].atributo.size(); i++ )
             atributosInseridos[i].clear();
@@ -224,10 +227,38 @@ int main ( int argc, char *argv[] )
         cout << "Entidade: ";
         cin >> nroEntidade;
 
-        if ( nroEntidade > 0 && nroEntidade <= entidades.size() ) {
+        if ( nroEntidade > 0 && nroEntidade <= entidades.size() )
+        {
           cout << endl << "Escolhida a entidade: '" << entidades[nroEntidade - 1].nome << "'" << endl;
 
-          // Inserir SQL de visualização aqui
+          // Insert SQL
+          sqlCommand += "SELECT * FROM " + entidades[nroEntidade - 1].nome + ";";
+          cout << sqlCommand << endl;
+          mysql_query( &conn, sqlCommand.c_str() );
+          result = mysql_store_result( &conn );
+          sqlCommand.clear();
+
+
+          while( field = mysql_fetch_field( result ) )
+          {
+            cout << field->name;
+
+            tabs.push_back( strlen( field->name ) / 8 );
+            cout << '\t';
+          }
+          cout << endl;
+
+          while ( row = mysql_fetch_row( result ) )
+          {
+              for( unsigned int i = 0; i < mysql_num_fields( result ); i++ )
+              {
+                  cout << row[i];
+
+                  for ( unsigned int j = 0; j <= tabs[i]; j++ )
+                    cout << '\t';
+              }
+              cout << endl;
+          }
         }
         else
           cout << endl << "Entidade invalida! " << endl;
