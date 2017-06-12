@@ -20,13 +20,13 @@ int main ( int argc, char *argv[] )
     mysql_init(&conn);
 
 
-	if( mysql_real_connect( &conn, "localhost", "root", "", "transporte", 3306, NULL, 0 ) )
+	if( mysql_real_connect( &conn, "localhost", "root", "root", "transporte", 3306, NULL, 0 ) )
 	{
     cout << "conectado \n";
 
     vector<Entidade> entidades;
     vector<string> atributosInseridos;
-    string tmpString;
+    string tmpString, sqlCommand;
     int opcao = -1;
     unsigned int nroEntidade, nroElemento;
 
@@ -187,9 +187,25 @@ int main ( int argc, char *argv[] )
           }
 
           //Insert SQL
-          mysql_query( &conn,"INSERT INTO `transporte`.`condutor` (`Nome`, `CPF`, `RG`, `Órgão Expedidor`,`Data de nascimento`) VALUES ('Geovana', '03674875102', '26354','SSP', '19910526');" );
+          sqlCommand = "INSERT INTO `transporte`.`" + entidades[nroEntidade - 1].nome + "` (";
+          for ( unsigned int i = 0; i < entidades[nroEntidade - 1].atributo.size(); i++ )
+          {
+            sqlCommand += "`" + entidades[nroEntidade - 1].atributo[i] + "`, ";
+          }
+          sqlCommand[sqlCommand.size() - 2] = ')';
+          sqlCommand += "VALUES (";
+          for ( unsigned int i = 0; i < atributosInseridos.size(); i++ )
+          {
+            sqlCommand += "'" + atributosInseridos[i] + "', ";
+          }
+          sqlCommand[sqlCommand.size() - 2] = ')';
+          sqlCommand[sqlCommand.size() - 1] = ';';
+          cout << sqlCommand << endl;
+          mysql_query( &conn, sqlCommand.c_str() );
 
+          //mysql_query( &conn,"INSERT INTO `transporte`.`condutor` (`Nome`, `CPF`, `RG`, `Órgão Expedidor`,`Data de nascimento`) VALUES ('Geovana', '03674875102', '26354','SSP', '19910526');" );
 
+          sqlCommand.clear();
           for ( unsigned int i = 0; i < entidades[nroEntidade - 1].atributo.size(); i++ )
             atributosInseridos[i].clear();
           atributosInseridos.clear();
@@ -284,7 +300,7 @@ int main ( int argc, char *argv[] )
   else
   {
     cout << "Falha de conexao\n";
-      cout << "Erro %d : %s\n", mysql_errno( &conn ), mysql_error( &conn );
+      cout << "Erro " << mysql_errno( &conn ) << " : " << mysql_error( &conn ) << endl;
   }
 
   return 0;
