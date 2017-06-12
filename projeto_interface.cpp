@@ -3,7 +3,7 @@
 #include <vector>
 #include <windows.h>
 #include <winsock2.h>
-#include <mysql/mysql.h>
+#include <mysql.h>
 
 using namespace std;
 
@@ -22,9 +22,7 @@ int main ( int argc, char *argv[] )
 
 	if( mysql_real_connect( &conn, "localhost", "root", "", "transporte", 3306, NULL, 0 ) )
 	{
-        cout << "conectado \n";
-
-
+    cout << "conectado \n";
 
     vector<Entidade> entidades;
     vector<string> atributosInseridos;
@@ -33,101 +31,120 @@ int main ( int argc, char *argv[] )
     unsigned int nroEntidade, nroElemento;
 
     entidades.push_back( Entidade() );
-    entidades.back().nome = "Motorista";
-    entidades.back().atributo.push_back( "ID" );
+    entidades.back().nome = "condutor";
     entidades.back().atributo.push_back( "Nome" );
+    entidades.back().atributo.push_back( "CPF" );
     entidades.back().atributo.push_back( "RG" );
+    entidades.back().atributo.push_back( "Órgão Expedidor" );
     entidades.back().atributo.push_back( "Data de nascimento" );
-    entidades.back().atributo.push_back( "Telefone" );
 
     entidades.push_back( Entidade() );
-    entidades.back().nome = "Habilitacao";
+    entidades.back().nome = "habilitacao";
+    entidades.back().atributo.push_back( "Número" );
     entidades.back().atributo.push_back( "Validade" );
-    entidades.back().atributo.push_back( "UF" );
-    entidades.back().atributo.push_back( "Orgao emissor" );
     entidades.back().atributo.push_back( "Categoria" );
-    entidades.back().atributo.push_back( "RG" );
+    entidades.back().atributo.push_back( "UF" );
 
     entidades.push_back( Entidade() );
-    entidades.back().nome = "Veiculo";
-    entidades.back().atributo.push_back( "ID" );
-    entidades.back().atributo.push_back( "ID da empresa" );
-    entidades.back().atributo.push_back( "ID do condutor" );
+    entidades.back().nome = "veiculo";
     entidades.back().atributo.push_back( "Placa" );
     entidades.back().atributo.push_back( "Chassi" );
+    entidades.back().atributo.push_back( "idEmpresa" );
+    entidades.back().atributo.push_back( "idCondutor" );
 
     entidades.push_back( Entidade() );
-    entidades.back().nome = "Marca de veiculo";
-    entidades.back().atributo.push_back( "ID" );
-    entidades.back().atributo.push_back( "Nome comercial" );
+    entidades.back().nome = "marca_veiculo";
+    entidades.back().atributo.push_back( "Nome Comercial" );
     entidades.back().atributo.push_back( "Nome Fantasia" );
     entidades.back().atributo.push_back( "Tipo" );
     entidades.back().atributo.push_back( "Sede" );
 
     entidades.push_back( Entidade() );
-    entidades.back().nome = "Categoria de veiculo";
-    entidades.back().atributo.push_back( "ID" );
+    entidades.back().nome = "categoria_veiculo";
     entidades.back().atributo.push_back( "Nome" );
-    entidades.back().atributo.push_back( "Quantidade de rodas" );
-    entidades.back().atributo.push_back( "Tracao" );
+    entidades.back().atributo.push_back( "Número de rodas" );
+    entidades.back().atributo.push_back( "Tração" );
     entidades.back().atributo.push_back( "Tipo" );
 
     entidades.push_back( Entidade() );
-    entidades.back().nome = "Empresa de transporte";
-    entidades.back().atributo.push_back( "ID" );
-    entidades.back().atributo.push_back( "Nome comercial" );
-    entidades.back().atributo.push_back( "Nome fantasia" );
+    entidades.back().nome = "empresa_transporte";
+    entidades.back().atributo.push_back( "Nome Comercial" );
+    entidades.back().atributo.push_back( "Nome Fantasia" );
     entidades.back().atributo.push_back( "Tipo" );
     entidades.back().atributo.push_back( "Sede" );
 
     entidades.push_back( Entidade() );
-    entidades.back().nome = "Local";
-    entidades.back().atributo.push_back( "ID" );
-    entidades.back().atributo.push_back( "Descricao" );
+    entidades.back().nome = "empregado_emp_trans";
+    entidades.back().atributo.push_back( "Nome" );
+    entidades.back().atributo.push_back( "CPF" );
+    entidades.back().atributo.push_back( "RG" );
+    entidades.back().atributo.push_back( "Órgão Expedidor" );
+    entidades.back().atributo.push_back( "Data de nascimento" );
+
+    entidades.push_back( Entidade() );
+    entidades.back().nome = "telefone_empregado";
+    entidades.back().atributo.push_back( "Telefone" );
+
+    entidades.push_back( Entidade() );
+    entidades.back().nome = "cobrador";
+    entidades.back().atributo.push_back( "Escolaridade" );
+
+    entidades.push_back( Entidade() );
+    entidades.back().nome = "motorista";
+    entidades.back().atributo.push_back( "CNH" );
+    entidades.back().atributo.push_back( "Nome" );
+    entidades.back().atributo.push_back( "Validade CNH" );
+
+    entidades.push_back( Entidade() );
+    entidades.back().nome = "local";
+    entidades.back().atributo.push_back( "Nome" );
+    entidades.back().atributo.push_back( "Descrição" );
     entidades.back().atributo.push_back( "CEP" );
     entidades.back().atributo.push_back( "Tipo" );
     entidades.back().atributo.push_back( "UF" );
 
     entidades.push_back( Entidade() );
-    entidades.back().nome = "Infracao";
-    entidades.back().atributo.push_back( "ID" );
-    entidades.back().atributo.push_back( "Situacao" );
+    entidades.back().nome = "infracao";
+    entidades.back().atributo.push_back( "Situação" );
     entidades.back().atributo.push_back( "Data" );
     entidades.back().atributo.push_back( "Vencimento" );
     entidades.back().atributo.push_back( "Velocidade aferida" );
 
     entidades.push_back( Entidade() );
-    entidades.back().nome = "Tipo de infracao";
-    entidades.back().atributo.push_back( "ID" );
-    entidades.back().atributo.push_back( "Descricao" );
-    entidades.back().atributo.push_back( "Classificacao" );
-    entidades.back().atributo.push_back( "Pontuacao" );
+    entidades.back().nome = "tipo_infracao";
+    entidades.back().atributo.push_back( "Descrição" );
+    entidades.back().atributo.push_back( "Classificação" );
+    entidades.back().atributo.push_back( "Pontuação" );
     entidades.back().atributo.push_back( "Valor" );
 
     entidades.push_back( Entidade() );
-    entidades.back().nome = "Via";
-    entidades.back().atributo.push_back( "ID" );
-    entidades.back().atributo.push_back( "Identificacao" );
-    entidades.back().atributo.push_back( "Classificacao" );
+    entidades.back().nome = "via";
+    entidades.back().atributo.push_back( "Identificação" );
+    entidades.back().atributo.push_back( "Classificação" );
     entidades.back().atributo.push_back( "Velocidade" );
     entidades.back().atributo.push_back( "UF" );
 
     entidades.push_back( Entidade() );
-    entidades.back().nome = "Sinalizacao";
-    entidades.back().atributo.push_back( "ID" );
-    entidades.back().atributo.push_back( "Descricao" );
+    entidades.back().nome = "sinalizacao";
+    entidades.back().atributo.push_back( "Descrição" );
     entidades.back().atributo.push_back( "Tipo" );
-    entidades.back().atributo.push_back( "Atributo 2" );
-    entidades.back().atributo.push_back( "Atributo 3" );
 
     entidades.push_back( Entidade() );
-    entidades.back().nome = "Fiscalizacao";
+    entidades.back().nome = "fiscalizacao";
 
     entidades.push_back( Entidade() );
-    entidades.back().nome = "Orgao de transito";
+    entidades.back().nome = "orgao_transito";
+    entidades.back().atributo.push_back( "Nome" );
+    entidades.back().atributo.push_back( "Descrição" );
 
     entidades.push_back( Entidade() );
-    entidades.back().nome = "Funcionario do orgao";
+    entidades.back().nome = "funcionario_orgao";
+    entidades.back().atributo.push_back( "Nome" );
+    entidades.back().atributo.push_back( "CPF" );
+    entidades.back().atributo.push_back( "RG" );
+    entidades.back().atributo.push_back( "Órgão Expedidor" );
+    entidades.back().atributo.push_back( "Função" );
+    entidades.back().atributo.push_back( "Data de nascimento" );
 
     cout << "Bem vindo ao Banco de Dados de Transporte do Governo do Distrito Federal" << endl;
 

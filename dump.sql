@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: projetobd
+-- Host: 127.0.0.1    Database: transporte
 -- ------------------------------------------------------
 -- Server version	5.7.18-log
 
@@ -214,6 +214,34 @@ LOCK TABLES `funcionario_orgao` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `habilitacao`
+--
+
+DROP TABLE IF EXISTS `habilitacao`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `habilitacao` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Número` int(10) unsigned NOT NULL,
+  `Validade` date NOT NULL,
+  `Categoria` varchar(2) NOT NULL,
+  `UF` varchar(2) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `Número_UNIQUE` (`Número`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `habilitacao`
+--
+
+LOCK TABLES `habilitacao` WRITE;
+/*!40000 ALTER TABLE `habilitacao` DISABLE KEYS */;
+/*!40000 ALTER TABLE `habilitacao` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `infracao`
 --
 
@@ -391,9 +419,11 @@ DROP TABLE IF EXISTS `telefone_empregado`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `telefone_empregado` (
+  `id` int(10) unsigned NOT NULL,
   `Telefone` int(10) unsigned DEFAULT NULL,
-  KEY `idEmpregado_idx` (`Telefone`),
-  CONSTRAINT `idEmpregado` FOREIGN KEY (`Telefone`) REFERENCES `empregado_emp_trans` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  CONSTRAINT `idEmpregado` FOREIGN KEY (`id`) REFERENCES `empregado_emp_trans` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -495,6 +525,37 @@ LOCK TABLES `via` WRITE;
 /*!40000 ALTER TABLE `via` DISABLE KEYS */;
 /*!40000 ALTER TABLE `via` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary view structure for view `viasdf`
+--
+
+DROP TABLE IF EXISTS `viasdf`;
+/*!50001 DROP VIEW IF EXISTS `viasdf`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `viasdf` AS SELECT 
+ 1 AS `id`,
+ 1 AS `Identificação`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Final view structure for view `viasdf`
+--
+
+/*!50001 DROP VIEW IF EXISTS `viasdf`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `viasdf` AS select `via`.`id` AS `id`,`via`.`Identificação` AS `Identificação` from `via` where (`via`.`UF` = 'DF') */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -505,4 +566,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-11 13:20:28
+-- Dump completed on 2017-06-12 11:14:13
