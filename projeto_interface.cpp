@@ -3,18 +3,10 @@
 #include <vector>
 #include <windows.h>
 #include <winsock2.h>
-#include <stdio.h>
 #include <mysql/mysql.h>
 
 using namespace std;
 
-#define HOST "localhost"
-#define USER "root"
-#define PASS "admin"
-#define DB "transporte"
-
-
-MYSQL *conn;
 
 struct Entidade {
   string nome;
@@ -22,14 +14,16 @@ struct Entidade {
 };
 
 int main ( int argc, char *argv[] ) {
+    MYSQL conn;
 
-conn = mysql_init(NULL);
+    mysql_init(&conn);
 
-	if(mysql_real_connect(conn, HOST, USER, PASS, DB, 0, NULL, 0))
+
+	if(mysql_real_connect(&conn, "localhost", "root", "", "transporte", 3306, NULL, 0))
 	{
-		cout << "conectado \n";
+        cout << "conectado \n";
 
-	}
+
 
   vector<Entidade> entidades;
   vector<string> atributosInseridos;
@@ -38,7 +32,7 @@ conn = mysql_init(NULL);
   unsigned int nroEntidade, nroElemento;
 
   entidades.push_back( Entidade() );
-  entidades.back().nome = "Condutor";
+  entidades.back().nome = "Motorista";
   entidades.back().atributo.push_back( "ID" );
   entidades.back().atributo.push_back( "Nome" );
   entidades.back().atributo.push_back( "RG" );
@@ -134,7 +128,7 @@ conn = mysql_init(NULL);
   entidades.push_back( Entidade() );
   entidades.back().nome = "Funcionario do orgao";
 
-  cout << "Bem vindo ao Banco de Dados de Transporte do Governo Brasileiro" << endl;
+  cout << "Bem vindo ao Banco de Dados de Transporte do Governo do Distrito Federal" << endl;
 
   while ( opcao != 0 ) {
     cout << endl << "Escolha uma operacao para executar no Banco de Dados: " << endl;
@@ -168,7 +162,9 @@ conn = mysql_init(NULL);
           tmpString.clear();
         }
 
-        // Inserir SQL de inserção aqui
+        //Insert SQL
+       mysql_query(&conn,"INSERT INTO `transporte`.`condutor` (`Nome`, `CPF`, `RG`, `Órgão Expedidor`,`Data de nascimento`) VALUES ('Geovana', '03674875102', '26354','SSP', '19910526');");
+
 
         for ( unsigned int i = 0; i < entidades[nroEntidade - 1].atributo.size(); i++ )
           atributosInseridos[i].clear();
@@ -255,6 +251,10 @@ conn = mysql_init(NULL);
       break;
     }
   }
-
+} else {
+	    cout << "Falha de conexao\n";
+        cout << "Erro %d : %s\n", mysql_errno(&conn), mysql_error(&conn);
+        return 0;
+    }
   return 0;
 }
