@@ -303,8 +303,7 @@ int main ( int argc, char *argv[] )
             tmpString.clear();
           }
 
-          // Inserir SQL de modificação aqui
-          // UPDATE `transporte`.`condutor` SET `RG`='21', `Órgão Expedidor`='SSP-GO' WHERE `id`='1';
+          // Insert SQL
           sqlCommand = "UPDATE `transporte`.`" + entidades[nroEntidade - 1].nome + "` SET";
 
           primeiro = 0;
@@ -346,7 +345,12 @@ int main ( int argc, char *argv[] )
           cout << "Escolha o elemento da entidade: ";
           cin >> nroElemento;
 
-          // Inserir SQL de remoção aqui
+          // Insert SQL
+          // DELETE FROM `transporte`.`condutor` WHERE `id`='2';
+          sqlCommand += "DELETE FROM `transporte`.`" + entidades[nroEntidade - 1].nome + "` WHERE `id`='" + uintToStr( nroElemento ) + "';";
+          cout << sqlCommand << endl;
+          mysql_query( &conn, sqlCommand.c_str() );
+          sqlCommand.clear();
         }
         else
           cout << endl << "Entidade invalida! " << endl;
