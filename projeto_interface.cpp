@@ -1,12 +1,26 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cmath>
 #include <windows.h>
 #include <winsock2.h>
 #include <mysql.h>
 
 using namespace std;
 
+string uintToStr ( unsigned int number )  // Converte um inteiro sem sinal para uma string com seus algarismos
+{
+  unsigned int decimals = log10(number), copy = number;
+  string algarisms;
+
+  for ( int i = decimals; i >= 0; i-- )
+  {
+    algarisms += (copy/(unsigned int)pow(10, i) + '0');
+    copy = copy%(unsigned int)pow(10, i);
+  }
+
+  return algarisms;
+}
 
 struct Entidade {
   string nome;
@@ -32,7 +46,7 @@ int main ( int argc, char *argv[] )
     vector<string> atributosInseridos;
     vector<unsigned int> tabs;
     string tmpString, sqlCommand;
-    int opcao = -1;
+    int opcao = -1, primeiro;
     unsigned int nroEntidade, nroElemento;
 
     entidades.push_back( Entidade() );
@@ -239,7 +253,7 @@ int main ( int argc, char *argv[] )
           sqlCommand.clear();
 
 
-          while( field = mysql_fetch_field( result ) )
+          while (( field = mysql_fetch_field( result ) ))
           {
             cout << field->name;
 
@@ -248,7 +262,7 @@ int main ( int argc, char *argv[] )
           }
           cout << endl;
 
-          while ( row = mysql_fetch_row( result ) )
+          while (( row = mysql_fetch_row( result ) ))
           {
               for( unsigned int i = 0; i < mysql_num_fields( result ); i++ )
               {
@@ -280,7 +294,7 @@ int main ( int argc, char *argv[] )
           cout << "Escolha o elemento da entidade: ";
           cin >> nroElemento;
 
-          cout << endl << "Para cada atributo do elemento '" << nroElemento << "', insira um dado para cada atributo" << endl;
+          cout << endl << "Para cada atributo do elemento '" << nroElemento << "', insira um dado" << endl;
           for ( unsigned int i = 0; i < entidades[nroEntidade - 1].atributo.size(); i++ )
           {
             cout << "Insira um dado para o atributo '" << entidades[nroEntidade - 1].atributo[i] << "': ";
@@ -289,7 +303,24 @@ int main ( int argc, char *argv[] )
             tmpString.clear();
           }
 
-          // Inserir SQL de modificação aqui
+          // Insert SQL
+          sqlCommand = "UPDATE `transporte`.`" + entidades[nroEntidade - 1].nome + "` SET";
+
+          primeiro = 0;
+          for ( unsigned int i = 0; i < atributosInseridos.size(); i++ )
+          {
+            if ( primeiro != 0 )
+              sqlCommand += ",";
+            else
+              primeiro = 1;
+
+            sqlCommand += " `" + entidades[nroEntidade - 1].atributo[i] + "`='" + atributosInseridos[i] + "'";
+          }
+
+          sqlCommand += " WHERE `id`='" + uintToStr( nroElemento ) + "';";
+          cout << sqlCommand << endl;
+          mysql_query( &conn, sqlCommand.c_str() );
+          sqlCommand.clear();
 
           for ( unsigned int i = 0; i < entidades[nroEntidade - 1].atributo.size(); i++ )
             atributosInseridos[i].clear();
@@ -314,7 +345,12 @@ int main ( int argc, char *argv[] )
           cout << "Escolha o elemento da entidade: ";
           cin >> nroElemento;
 
-          // Inserir SQL de remoção aqui
+          // Insert SQL
+          // DELETE FROM `transporte`.`condutor` WHERE `id`='2';
+          sqlCommand += "DELETE FROM `transporte`.`" + entidades[nroEntidade - 1].nome + "` WHERE `id`='" + uintToStr( nroElemento ) + "';";
+          cout << sqlCommand << endl;
+          mysql_query( &conn, sqlCommand.c_str() );
+          sqlCommand.clear();
         }
         else
           cout << endl << "Entidade invalida! " << endl;
