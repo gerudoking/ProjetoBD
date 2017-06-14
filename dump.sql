@@ -31,7 +31,7 @@ CREATE TABLE `categoria_veiculo` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `Nome_UNIQUE` (`Nome`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +40,7 @@ CREATE TABLE `categoria_veiculo` (
 
 LOCK TABLES `categoria_veiculo` WRITE;
 /*!40000 ALTER TABLE `categoria_veiculo` DISABLE KEYS */;
+INSERT INTO `categoria_veiculo` VALUES (1,'Ç…',2,'X','B');
 /*!40000 ALTER TABLE `categoria_veiculo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -51,15 +52,10 @@ DROP TABLE IF EXISTS `cobrador`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cobrador` (
-  `id` int(10) unsigned NOT NULL,
-  `CPF` int(10) unsigned NOT NULL,
-  `RG` int(10) unsigned NOT NULL,
-  `Órgão expedidor` varchar(45) NOT NULL,
-  `Escolaridade` varchar(45) DEFAULT NULL,
+  `id` int(10) unsigned NOT NULL DEFAULT '99999',
+  `Escolaridade` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
-  UNIQUE KEY `CPF_UNIQUE` (`CPF`),
-  CONSTRAINT `idCobrador` FOREIGN KEY (`id`) REFERENCES `empregado_emp_trans` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -69,6 +65,7 @@ CREATE TABLE `cobrador` (
 
 LOCK TABLES `cobrador` WRITE;
 /*!40000 ALTER TABLE `cobrador` DISABLE KEYS */;
+INSERT INTO `cobrador` VALUES (99999,'Superior');
 /*!40000 ALTER TABLE `cobrador` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,7 +86,7 @@ CREATE TABLE `condutor` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `CPF_UNIQUE` (`CPF`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,6 +95,7 @@ CREATE TABLE `condutor` (
 
 LOCK TABLES `condutor` WRITE;
 /*!40000 ALTER TABLE `condutor` DISABLE KEYS */;
+INSERT INTO `condutor` VALUES (4,'Jos‚',22,33,'SSP-DF','1995-04-05'),(5,'José',34,45,'SSP-AC','1991-11-11');
 /*!40000 ALTER TABLE `condutor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -129,6 +127,26 @@ LOCK TABLES `empregado_emp_trans` WRITE;
 /*!40000 ALTER TABLE `empregado_emp_trans` DISABLE KEYS */;
 /*!40000 ALTER TABLE `empregado_emp_trans` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER insere_cobrador_apos_empregado AFTER INSERT
+ON empregado_emp_trans
+FOR EACH ROW
+BEGIN
+	INSERT INTO cobrador (`id`) VALUES (new.id);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `empresa_transporte`
@@ -196,6 +214,7 @@ CREATE TABLE `funcionario_orgao` (
   `Órgão expedidor` varchar(45) NOT NULL,
   `Função` varchar(45) NOT NULL,
   `idÓrgãoTrânsito` int(10) unsigned NOT NULL,
+  `Data de nascimento` date NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `CPF_UNIQUE` (`CPF`),
@@ -540,6 +559,10 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
+-- Dumping events for database 'transporte'
+--
+
+--
 -- Final view structure for view `viasdf`
 --
 
@@ -566,4 +589,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-12 11:14:13
+-- Dump completed on 2017-06-14 13:41:53
