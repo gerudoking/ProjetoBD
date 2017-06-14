@@ -31,13 +31,12 @@ struct Entidade {
 
 int main ( int argc, char *argv[] )
 {
-  system( "chcp 1252 > nul" );
-  MYSQL conn;
+    MYSQL conn;
 
-  mysql_init(&conn);
+    mysql_init(&conn);
 
-
-	if( mysql_real_connect( &conn, "localhost", "root", "root", "transporte", 3306, NULL, 0 ) )
+//senha "root"
+	if( mysql_real_connect( &conn, "localhost", "root", "", "transporte", 3306, NULL, 0 ) )
 	{
     cout << "Conectado com o Banco de Dados" << endl;
 
@@ -225,7 +224,9 @@ int main ( int argc, char *argv[] )
 #ifdef DEBUG_SQL
           cout << sqlCommand << endl;
 #endif
-          mysql_query( &conn, sqlCommand.c_str() );
+          if (mysql_query( &conn, sqlCommand.c_str() )){
+            cout << endl << "Nao foi possivel armazenar os dados informados. Tente novamente!" <<endl;
+          }else cout << endl << "Dados armazenados com sucesso!" <<endl;
 
           sqlCommand.clear();
           for ( unsigned int i = 0; i < entidades[nroEntidade - 1].atributo.size(); i++ )
@@ -328,7 +329,10 @@ int main ( int argc, char *argv[] )
 #ifdef DEBUG_SQL
           cout << sqlCommand << endl;
 #endif
-          mysql_query( &conn, sqlCommand.c_str() );
+          if (mysql_query( &conn, sqlCommand.c_str() )){
+            cout << "Nao foi possivel efetuar a modificacao. Tente novamente";
+          } else
+            cout <<  endl << "Modificacao efetuada com sucesso!" << endl;
           sqlCommand.clear();
 
           for ( unsigned int i = 0; i < entidades[nroEntidade - 1].atributo.size(); i++ )
@@ -359,7 +363,12 @@ int main ( int argc, char *argv[] )
 #ifdef DEBUG_SQL
           cout << sqlCommand << endl;
 #endif
-          mysql_query( &conn, sqlCommand.c_str() );
+
+          if (mysql_query( &conn, sqlCommand.c_str() )){
+            cout << "Nao foi possivel remover o dado. Tente novamente";
+          } else
+            cout <<  endl << "O dado foi removido com sucesso!" << endl;
+
           sqlCommand.clear();
         }
         else
