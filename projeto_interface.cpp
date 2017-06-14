@@ -31,9 +31,11 @@ struct Entidade {
 
 int main ( int argc, char *argv[] )
 {
-    MYSQL conn;
+  system( "chcp 1252 > nul" );
 
-    mysql_init(&conn);
+  MYSQL conn;
+
+  mysql_init(&conn);
 
 	if( mysql_real_connect( &conn, "localhost", "root", "root", "transporte", 3306, NULL, 0 ) )
 	{
@@ -170,13 +172,13 @@ int main ( int argc, char *argv[] )
 
     while ( opcao != 0 )
     {
-      cout << endl << "Escolha uma operacao para executar no Banco de Dados: " << endl;
+      cout << endl << "Escolha uma operação para executar no Banco de Dados: " << endl;
       cout << "1 - Inserir um novo elemento" << endl;
       cout << "2 - Visualizar uma tabela" << endl;
       cout << "3 - Modificar um elemento" << endl;
       cout << "4 - Remover um elemento" << endl;
       cout << "0 - Sair" << endl;
-      cout << "Opcao: ";
+      cout << "Opção: ";
       cin >> opcao;
       cout << endl;
 
@@ -223,9 +225,10 @@ int main ( int argc, char *argv[] )
 #ifdef DEBUG_SQL
           cout << sqlCommand << endl;
 #endif
-          if (mysql_query( &conn, sqlCommand.c_str() )){
-            cout << endl << "Nao foi possivel armazenar os dados informados. Tente novamente!" <<endl;
-          }else cout << endl << "Dados armazenados com sucesso!" <<endl;
+          if ( mysql_query( &conn, sqlCommand.c_str() ) )
+            cout << endl << "Não foi possével armazenar os dados informados. Tente novamente!" << endl;
+          else
+            cout << endl << "Dados armazenados com sucesso!" <<endl;
 
           sqlCommand.clear();
           for ( unsigned int i = 0; i < entidades[nroEntidade - 1].atributo.size(); i++ )
@@ -233,7 +236,7 @@ int main ( int argc, char *argv[] )
           atributosInseridos.clear();
         }
         else
-          cout << endl << "Entidade invalida! " << endl;
+          cout << endl << "Entidade inválida! " << endl;
 
         break;
 
@@ -282,7 +285,7 @@ int main ( int argc, char *argv[] )
           }
         }
         else
-          cout << endl << "Entidade invalida! " << endl;
+          cout << endl << "Entidade inválida! " << endl;
 
         break;
 
@@ -328,10 +331,10 @@ int main ( int argc, char *argv[] )
 #ifdef DEBUG_SQL
           cout << sqlCommand << endl;
 #endif
-          if (mysql_query( &conn, sqlCommand.c_str() )){
-            cout << "Nao foi possivel efetuar a modificacao. Tente novamente";
-          } else
-            cout <<  endl << "Modificacao efetuada com sucesso!" << endl;
+          if ( mysql_query( &conn, sqlCommand.c_str() ) )
+            cout << endl << "Não foi possével efetuar a modificação. Tente novamente!" << endl;
+          else
+            cout <<  endl << "Modificação efetuada com sucesso!" << endl;
           sqlCommand.clear();
 
           for ( unsigned int i = 0; i < entidades[nroEntidade - 1].atributo.size(); i++ )
@@ -339,7 +342,7 @@ int main ( int argc, char *argv[] )
           atributosInseridos.clear();
         }
         else
-          cout << endl << "Entidade invalida! " << endl;
+          cout << endl << "Entidade inválida! " << endl;
 
         break;
 
@@ -364,19 +367,19 @@ int main ( int argc, char *argv[] )
 #endif
 
           if (mysql_query( &conn, sqlCommand.c_str() )){
-            cout << "Nao foi possivel remover o dado. Tente novamente";
+            cout << endl << "Não foi possivel remover o elemento. Tente novamente!" << endl;
           } else
             cout <<  endl << "O dado foi removido com sucesso!" << endl;
 
           sqlCommand.clear();
         }
         else
-          cout << endl << "Entidade invalida! " << endl;
+          cout << endl << "Entidade inválida! " << endl;
 
         break;
 
       default:
-        cout << "Opcao invalida! Por favor escolha outra opcao" << endl;
+        cout << "Opção inválida! Por favor escolha outra opção" << endl;
 
         break;
       }
@@ -384,7 +387,7 @@ int main ( int argc, char *argv[] )
   }
   else
   {
-    cout << "Falha de conexao\n";
+    cout << "Falha de conexão\n";
       cout << "Erro " << mysql_errno( &conn ) << " : " << mysql_error( &conn ) << endl;
   }
 
