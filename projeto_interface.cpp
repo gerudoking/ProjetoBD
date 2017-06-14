@@ -31,9 +31,10 @@ struct Entidade {
 
 int main ( int argc, char *argv[] )
 {
-    MYSQL conn;
+  system( "chcp 1252 > nul" );
+  MYSQL conn;
 
-    mysql_init(&conn);
+  mysql_init(&conn);
 
 
 	if( mysql_real_connect( &conn, "localhost", "root", "root", "transporte", 3306, NULL, 0 ) )
