@@ -39,7 +39,7 @@ int main ( int argc, char *argv[] )
 
 	if( mysql_real_connect( &conn, "localhost", "root", "root", "transporte", 3306, NULL, 0 ) )
 	{
-    cout << "Conectado com o Banco de Dados" << endl;
+    //cout << "Conectado com o Banco de Dados" << endl;
 
     MYSQL_RES *result;
     MYSQL_ROW row;
@@ -57,12 +57,12 @@ int main ( int argc, char *argv[] )
     entidades.back().atributo.push_back( "Nome" );
     entidades.back().atributo.push_back( "CPF" );
     entidades.back().atributo.push_back( "RG" );
-    entidades.back().atributo.push_back( "Órgão Expedidor" );
+    entidades.back().atributo.push_back( "Ã“rgÃ£o Expedidor" );
     entidades.back().atributo.push_back( "Data de nascimento" );
 
     entidades.push_back( Entidade() );
     entidades.back().nome = "habilitacao";
-    entidades.back().atributo.push_back( "Número" );
+    entidades.back().atributo.push_back( "NÃºmero" );
     entidades.back().atributo.push_back( "Validade" );
     entidades.back().atributo.push_back( "Categoria" );
     entidades.back().atributo.push_back( "UF" );
@@ -84,8 +84,8 @@ int main ( int argc, char *argv[] )
     entidades.push_back( Entidade() );
     entidades.back().nome = "categoria_veiculo";
     entidades.back().atributo.push_back( "Nome" );
-    entidades.back().atributo.push_back( "Número de rodas" );
-    entidades.back().atributo.push_back( "Tração" );
+    entidades.back().atributo.push_back( "NÃºmero de rodas" );
+    entidades.back().atributo.push_back( "TraÃ§Ã£o" );
     entidades.back().atributo.push_back( "Tipo" );
 
     entidades.push_back( Entidade() );
@@ -100,7 +100,7 @@ int main ( int argc, char *argv[] )
     entidades.back().atributo.push_back( "Nome" );
     entidades.back().atributo.push_back( "CPF" );
     entidades.back().atributo.push_back( "RG" );
-    entidades.back().atributo.push_back( "Órgão Expedidor" );
+    entidades.back().atributo.push_back( "Ã“rgÃ£o Expedidor" );
     entidades.back().atributo.push_back( "Data de nascimento" );
 
     entidades.push_back( Entidade() );
@@ -120,35 +120,35 @@ int main ( int argc, char *argv[] )
     entidades.push_back( Entidade() );
     entidades.back().nome = "local";
     entidades.back().atributo.push_back( "Nome" );
-    entidades.back().atributo.push_back( "Descrição" );
+    entidades.back().atributo.push_back( "DescriÃ§Ã£o" );
     entidades.back().atributo.push_back( "CEP" );
     entidades.back().atributo.push_back( "Tipo" );
     entidades.back().atributo.push_back( "UF" );
 
     entidades.push_back( Entidade() );
     entidades.back().nome = "infracao";
-    entidades.back().atributo.push_back( "Situação" );
+    entidades.back().atributo.push_back( "SituaÃ§Ã£o" );
     entidades.back().atributo.push_back( "Data" );
     entidades.back().atributo.push_back( "Vencimento" );
     entidades.back().atributo.push_back( "Velocidade aferida" );
 
     entidades.push_back( Entidade() );
     entidades.back().nome = "tipo_infracao";
-    entidades.back().atributo.push_back( "Descrição" );
-    entidades.back().atributo.push_back( "Classificação" );
-    entidades.back().atributo.push_back( "Pontuação" );
+    entidades.back().atributo.push_back( "DescriÃ§Ã£o" );
+    entidades.back().atributo.push_back( "ClassificaÃ§Ã£o" );
+    entidades.back().atributo.push_back( "PontuaÃ§Ã£o" );
     entidades.back().atributo.push_back( "Valor" );
 
     entidades.push_back( Entidade() );
     entidades.back().nome = "via";
-    entidades.back().atributo.push_back( "Identificação" );
-    entidades.back().atributo.push_back( "Classificação" );
+    entidades.back().atributo.push_back( "IdentificaÃ§Ã£o" );
+    entidades.back().atributo.push_back( "ClassificaÃ§Ã£o" );
     entidades.back().atributo.push_back( "Velocidade" );
     entidades.back().atributo.push_back( "UF" );
 
     entidades.push_back( Entidade() );
     entidades.back().nome = "sinalizacao";
-    entidades.back().atributo.push_back( "Descrição" );
+    entidades.back().atributo.push_back( "DescriÃ§Ã£o" );
     entidades.back().atributo.push_back( "Tipo" );
 
     entidades.push_back( Entidade() );
@@ -157,15 +157,15 @@ int main ( int argc, char *argv[] )
     entidades.push_back( Entidade() );
     entidades.back().nome = "orgao_transito";
     entidades.back().atributo.push_back( "Nome" );
-    entidades.back().atributo.push_back( "Descrição" );
+    entidades.back().atributo.push_back( "DescriÃ§Ã£o" );
 
     entidades.push_back( Entidade() );
     entidades.back().nome = "funcionario_orgao";
     entidades.back().atributo.push_back( "Nome" );
     entidades.back().atributo.push_back( "CPF" );
     entidades.back().atributo.push_back( "RG" );
-    entidades.back().atributo.push_back( "Órgão Expedidor" );
-    entidades.back().atributo.push_back( "Função" );
+    entidades.back().atributo.push_back( "Ã“rgÃ£o Expedidor" );
+    entidades.back().atributo.push_back( "FunÃ§Ã£o" );
     entidades.back().atributo.push_back( "Data de nascimento" );
 
     cout << "Bem vindo ao Banco de Dados de Transporte do Governo do Distrito Federal" << endl;
@@ -225,7 +225,9 @@ int main ( int argc, char *argv[] )
 #ifdef DEBUG_SQL
           cout << sqlCommand << endl;
 #endif
-          mysql_query( &conn, sqlCommand.c_str() );
+         if (mysql_query( &conn, sqlCommand.c_str() )){
+            cout << endl << "Nao foi possivel armazenar os dados informados. Tente novamente!" <<endl;
+          }else cout << endl << "Dados armazenados com sucesso!" <<endl;
 
           sqlCommand.clear();
           for ( unsigned int i = 0; i < entidades[nroEntidade - 1].atributo.size(); i++ )
@@ -328,8 +330,12 @@ int main ( int argc, char *argv[] )
 #ifdef DEBUG_SQL
           cout << sqlCommand << endl;
 #endif
-          mysql_query( &conn, sqlCommand.c_str() );
-          sqlCommand.clear();
+          if (mysql_query( &conn, sqlCommand.c_str() )){
+            cout << "Nao foi possivel efetuar a modificacao. Tente novamente";
+          } else
+            cout <<  endl << "Modificacao efetuada com sucesso!" << endl;
+
+	sqlCommand.clear();
 
           for ( unsigned int i = 0; i < entidades[nroEntidade - 1].atributo.size(); i++ )
             atributosInseridos[i].clear();
@@ -359,8 +365,13 @@ int main ( int argc, char *argv[] )
 #ifdef DEBUG_SQL
           cout << sqlCommand << endl;
 #endif
-          mysql_query( &conn, sqlCommand.c_str() );
-          sqlCommand.clear();
+	
+	if (mysql_query( &conn, sqlCommand.c_str() )){
+            cout << "Nao foi possivel remover o dado. Tente novamente";
+          } else cout <<  endl << "O dado foi removido com sucesso!" << endl;
+
+		
+	sqlCommand.clear();
         }
         else
           cout << endl << "Entidade invalida! " << endl;
