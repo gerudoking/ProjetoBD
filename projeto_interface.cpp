@@ -6,6 +6,8 @@
 #include <winsock2.h>
 #include <mysql.h>
 
+//#define DEBUG_SQL
+
 using namespace std;
 
 string uintToStr ( unsigned int number )  // Converte um inteiro sem sinal para uma string com seus algarismos
@@ -219,7 +221,9 @@ int main ( int argc, char *argv[] )
           }
           sqlCommand[sqlCommand.size() - 2] = ')';
           sqlCommand[sqlCommand.size() - 1] = ';';
+#ifdef DEBUG_SQL
           cout << sqlCommand << endl;
+#endif
           mysql_query( &conn, sqlCommand.c_str() );
 
           sqlCommand.clear();
@@ -247,7 +251,9 @@ int main ( int argc, char *argv[] )
 
           // Insert SQL
           sqlCommand += "SELECT * FROM " + entidades[nroEntidade - 1].nome + ";";
+#ifdef DEBUG_SQL
           cout << sqlCommand << endl;
+#endif
           mysql_query( &conn, sqlCommand.c_str() );
           result = mysql_store_result( &conn );
           sqlCommand.clear();
@@ -318,7 +324,9 @@ int main ( int argc, char *argv[] )
           }
 
           sqlCommand += " WHERE `id`='" + uintToStr( nroElemento ) + "';";
+#ifdef DEBUG_SQL
           cout << sqlCommand << endl;
+#endif
           mysql_query( &conn, sqlCommand.c_str() );
           sqlCommand.clear();
 
@@ -346,9 +354,10 @@ int main ( int argc, char *argv[] )
           cin >> nroElemento;
 
           // Insert SQL
-          // DELETE FROM `transporte`.`condutor` WHERE `id`='2';
           sqlCommand += "DELETE FROM `transporte`.`" + entidades[nroEntidade - 1].nome + "` WHERE `id`='" + uintToStr( nroElemento ) + "';";
+#ifdef DEBUG_SQL
           cout << sqlCommand << endl;
+#endif
           mysql_query( &conn, sqlCommand.c_str() );
           sqlCommand.clear();
         }
